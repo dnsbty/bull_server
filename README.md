@@ -1,18 +1,14 @@
-# BullServer
+# Bull Server ![Bull Server Build Status](https://img.shields.io/circleci/project/github/dnsbty/bull_server/master.svg)
+![Bull](https://user-images.githubusercontent.com/3421625/34645447-bd9022d0-f30a-11e7-8526-497db235c6d5.gif)
 
-To start your Phoenix server:
+Bull is a real-time group game in which players invent definitions for unknown words, and then guess which of the many definitions is correct.
+The server for the game is built using Phoenix Channels to handle the communication layer, and with Agents to handle game state.
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+## Running the server
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+1. Make sure you have [Elixir 1.5 and OTP 20 installed](https://elixir-lang.org/install.html)
+2. Clone the repo onto your local machine: `git clone git@github.com:dnsbty/bull_server.git`
+3. Install the project's dependencies: `cd bull-server && mix deps.get`
+4. Start the server: `mix phx.server`
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+Now you can connect to the websocket with [`localhost:3333/socket/websocket`](http://localhost:3333/socket/websocket)
