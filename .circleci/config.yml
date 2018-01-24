@@ -27,12 +27,12 @@ jobs:
           command: MIX_ENV=prod mix compile
       - run:
           name: Build App release
-          command: MIX_ENV=prod mix release --env=prod;
+          command: MIX_ENV=prod mix release --env=prod
       - deploy:
           name: Deploy to Production
           command: |
             ssh-keyscan -H $APP_HOST >> ~/.ssh/known_hosts;
-            rsync -ravhz --stats --progress ./rel/$APP_NAME $APP_USER@$APP_HOST:apps;
+            rsync -ravhz --stats --progress ./_build/prod/rel/$APP_NAME $APP_USER@$APP_HOST:apps;
       - deploy:
           name: Post-deploy and App restart on Production
           command: ./.circleci/post-deploy.sh
