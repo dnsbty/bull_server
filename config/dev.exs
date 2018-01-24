@@ -7,11 +7,18 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :bull_server, BullServerWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: 3333],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: []
+
+# ## Using releases
+#
+# If you are doing OTP releases, you need to instruct Phoenix
+# to start the server for all endpoints:
+#
+config :phoenix, :serve_endpoints, true
 
 # ## SSL Support
 #
