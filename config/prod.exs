@@ -15,7 +15,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :bull_server, BullServerWeb.Endpoint,
   http: [port: 2222],
-  url: [host: "thebullgame.com", port: 80]
+  url: [host: "thebullgame.com", port: 80],
+  secret_key_base: "ejkJuOBjGM16mXQHX0OHGOMEd7+uK9tqcNIJXRiIvfFA18ZAzSkPv+nr+cXIZX1L"
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -60,4 +61,4 @@ config :phoenix, :serve_endpoints, true
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
