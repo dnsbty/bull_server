@@ -6,10 +6,6 @@ ssh $APP_USER@$APP_HOST <<ENDSSH
 
   echo "stopping app";
   ./bin/$APP_NAME stop;
-ENDSSH
-
-ssh $APP_USER@$APP_HOST <<ENDSSH
-  cd ./apps/$APP_NAME;
 
   echo "starting app";
   ./bin/$APP_NAME start;
