@@ -5,7 +5,9 @@ defmodule BullServerWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", BullServerWeb do
+  scope "/", BullServerWeb do
     pipe_through :api
+
+    get "/", PageController, :index
   end
 end
