@@ -1,4 +1,4 @@
-defmodule BullServer.Words do
+defmodule BullServer.Games.Words do
   @moduledoc """
   A list of words and definitions from which to take random words to be defined.
   """
@@ -156,10 +156,10 @@ defmodule BullServer.Words do
 
   ## Examples
 
-      iex> BullServer.Words.define("zyzzyva")
+      iex> define("zyzzyva")
       "American weevil that destroys plants"
 
-      iex> BullServer.Words.define("sdlkfj")
+      iex> define("sdlkfj")
       nil
   """
   @spec define(word :: String.t) :: String.t | nil
