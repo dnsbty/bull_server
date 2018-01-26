@@ -9,7 +9,9 @@ defmodule BullServer.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases(),
+      dialyzer: [plt_add_deps: :transitive, ignore_warnings: ".dialyzer.ignore-warnings"]
     ]
   end
 
@@ -36,7 +38,13 @@ defmodule BullServer.Mixfile do
       {:distillery, "~> 1.5"},
       {:gettext, "~> 0.11"},
       {:phoenix, "~> 1.3.0"},
-      {:phoenix_pubsub, "~> 1.0"}
+      {:phoenix_pubsub, "~> 1.0"},
+      {:dialyxir, "~> 0.5", only: [:dev]}
     ]
+  end
+
+  # Specifies a list of mix task aliases.
+  defp aliases() do
+    ["compile": ["compile --warnings-as-errors"]]
   end
 end
