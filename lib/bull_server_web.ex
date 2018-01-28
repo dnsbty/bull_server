@@ -52,6 +52,7 @@ defmodule BullServerWeb do
     quote do
       use Phoenix.Channel
       import BullServerWeb.Gettext
+      alias BullServerWeb.Presence
     end
   end
 
