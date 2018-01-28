@@ -9,5 +9,6 @@ defmodule BullServerWeb.Router do
     pipe_through :api
 
     get "/", PageController, :index
+    get "/status", PageController, :status
   end
 end
