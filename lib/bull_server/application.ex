@@ -11,8 +11,7 @@ defmodule BullServer.Application do
       # Start the endpoint when the application starts
       supervisor(BullServerWeb.Endpoint, []),
       supervisor(BullServerWeb.Presence, []),
-      # Start your own worker by calling: BullServer.Worker.start_link(arg1, arg2, arg3)
-      # worker(BullServer.Worker, [arg1, arg2, arg3]),
+      worker(BullServer.Games, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
