@@ -99,7 +99,7 @@ defmodule BullServer.Games do
   @doc """
   Gets a game by its ID.
   """
-  @spec get(game_id :: String.t) :: pid
+  @spec get(game_id :: String.t) :: pid | nil
   def get(game_id) do
     Agent.get(__MODULE__, &Map.get(&1, game_id))
   end
