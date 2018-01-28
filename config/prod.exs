@@ -16,6 +16,7 @@ use Mix.Config
 config :bull_server, BullServerWeb.Endpoint,
   http: [port: 2222],
   url: [host: "//api.thebullgame.com"],
+  check_origin: false,
   secret_key_base: "ejkJuOBjGM16mXQHX0OHGOMEd7+uK9tqcNIJXRiIvfFA18ZAzSkPv+nr+cXIZX1L"
 
 # Do not print debug messages in production
