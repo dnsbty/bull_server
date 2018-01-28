@@ -1,6 +1,5 @@
 defmodule BullServerWeb.UserSocket do
   use Phoenix.Socket
-  require Logger
 
   ## Channels
   channel "game:*", BullWebServer.GameChannel
@@ -21,10 +20,6 @@ defmodule BullServerWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(%{"name" => name}, socket) do
-    socket
-    |> inspect
-    |> Logger.info
-
     {:ok, assign(socket, :name, name)}
   end
 
