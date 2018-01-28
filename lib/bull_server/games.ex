@@ -1,6 +1,6 @@
 defmodule BullServer.Games do
   use Agent
-  # alias BullServerWeb.Presence
+  alias BullServerWeb.Presence
   alias BullServer.Games.{
     Game,
     Id,
@@ -30,20 +30,20 @@ defmodule BullServer.Games do
     Agent.update(__MODULE__, &Map.delete(&1, game_id))
   end
 
-  # @doc """
-  # Clears all games where all players have left.
-  # """
-  # @spec clear_empty() :: :ok
-  # def clear_empty do
-  #   Enum.each(list(), fn({game_id, _}) ->
-  #     "game:#{game_id}"
-  #     |> Presence.list
-  #     |> clear_if_empty(game_id)
-  #   end)
-  # end
-  #
-  # defp clear_if_empty(players, game_id) when players == %{}, do: clear(game_id)
-  # defp clear_if_empty(_, _), do: nil
+  @doc """
+  Clears all games where all players have left.
+  """
+  @spec clear_empty() :: :ok
+  def clear_empty do
+    Enum.each(list(), fn({game_id, _}) ->
+      "game:#{game_id}"
+      |> Presence.list
+      |> clear_if_empty(game_id)
+    end)
+  end
+
+  defp clear_if_empty(players, game_id) when players == %{}, do: clear(game_id)
+  defp clear_if_empty(_, _), do: nil
 
   @doc """
   Clears all games from memory.
