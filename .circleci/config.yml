@@ -24,18 +24,21 @@ jobs:
         environment:
           MIX_ENV: prod
     steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar
       - run:
           name: Install rsync
           command: sudo apt-get update -qq && sudo apt-get install -y ssh rsync
       - run:
           name: Get Mix dependencies
-          command: MIX_ENV=prod mix deps.get
+          command: mix deps.get
       - run:
           name: Compile App
-          command: MIX_ENV=prod mix compile
+          command: mix compile
       - run:
           name: Build App release
-          command: MIX_ENV=prod mix release --env=prod
+          command: mix release --env=prod
       - deploy:
           name: Deploy to Production
           command: |
