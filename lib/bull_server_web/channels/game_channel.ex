@@ -126,5 +126,5 @@ defmodule BullWebServer.GameChannel do
 
   defp game_id(%{topic: "game:" <> game_id}), do: game_id
 
-  defp player_name(%{assigns: %{player_name: name}}), do: name
+  defp player_name(%{assigns: %{name: name}}), do: name
 end
