@@ -16,8 +16,16 @@ jobs:
       - run: mix local.rebar
       - run: mix deps.get
       - run: mix test
+
+  deploy:
+    working_directory: ~/bull
+    docker:
+      - image: circleci/elixir:1.6
+        environment:
+          MIX_ENV: prod
+    steps:
       - run:
-          name: Install some System dependencies
+          name: Install rsync
           command: sudo apt-get update -qq && sudo apt-get install -y ssh rsync
       - run:
           name: Get Mix dependencies
@@ -34,5 +42,16 @@ jobs:
             ssh-keyscan -H $APP_HOST >> ~/.ssh/known_hosts;
             rsync -ravhz --stats --progress ./_build/prod/rel/$APP_NAME $APP_USER@$APP_HOST:apps;
       - deploy:
-          name: Post-deploy and App restart on Production
+          name: Start the app in Production
           command: ./.circleci/post-deploy.sh
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
