@@ -19,6 +19,31 @@ defmodule BullServer.Games do
   end
 
   @doc """
+  Returns whether or not a player can join a game.
+  """
+  @spec can_join?(game_id :: String.t, player_name :: String.t, key :: String.t) :: {:ok, nil} | {:error, String.t}
+  def can_join?(game_id, player_name, key) do
+    with game when is_pid(game) <- get(game_id),
+         false <- Game.has_started?(game)
+    do
+      {:ok, nil}
+    else
+      nil -> {:error, :bad_id}
+      true -> authorize(game_id, player_name, key)
+    end
+  end
+
+  @spec authorize(game_id :: String.t, player_name :: String.t, key :: String.t) :: {:ok, nil} | {:error, atom}
+  defp authorize(_, _, nil), do: {:error, :started}
+  defp authorize(game_id, player_name, key) do
+    game = get(game_id)
+    case Game.key(game, player_name) do
+      ^key -> {:ok, nil}
+      _ -> {:error, :bad_key}
+    end
+  end
+
+  @doc """
   Clears a game from memory.
   """
   @spec clear(game_id :: String.t) :: :ok

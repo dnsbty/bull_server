@@ -14,9 +14,14 @@ defmodule BullWebServer.GameChannel do
     send(self(), :create_game)
     {:ok, socket}
   end
-  def join("game:" <> _game_id, _message, socket) do
-    send(self(), :after_join)
-    {:ok, socket}
+  def join("game:" <> game_id, _message, %{assigns: assigns} = socket) do
+    player_name = Map.get(assigns, :name)
+    key = Map.get(assigns, :key)
+
+    with {:ok, _} <- Games.can_join?(game_id, player_name, key) do
+      send(self(), :after_join)
+      {:ok, socket}
+    end
   end
 
   @doc """

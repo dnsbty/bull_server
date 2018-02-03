@@ -19,6 +19,14 @@ defmodule BullServerWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
+  def connect(%{"name" => name, "key" => key}, socket) do
+    transformed =
+      socket
+      |> assign(:name, name)
+      |> assign(:key, key)
+
+    {:ok, transformed}
+  end
   def connect(%{"name" => name}, socket) do
     {:ok, assign(socket, :name, name)}
   end
