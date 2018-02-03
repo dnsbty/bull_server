@@ -6,7 +6,7 @@ defmodule BullServer.Games.Game do
   """
   @spec add_to_score(game :: pid, player_name :: String.t, points :: integer) :: :ok
   def add_to_score(game, player_name, points) do
-    current_score = Agent.get(game, &Kernel.get_in(&1, [:scores, player_name])) |> IO.inspect(label: "current score")
+    current_score = Agent.get(game, &Kernel.get_in(&1, [:scores, player_name]))
     new_score = current_score + points
     Agent.update(game, &Kernel.put_in(&1, [:scores, player_name], new_score))
   end
@@ -20,6 +20,7 @@ defmodule BullServer.Games.Game do
       current_round: 0,
       current_stage: :start,
       id: game_id,
+      players: %{},
       scores: %{},
       started: false,
       words: []
@@ -111,9 +112,22 @@ defmodule BullServer.Games.Game do
   @spec start(game :: pid, players :: list(String.t)) :: :ok
   def start(game, players) do
     Agent.update(game, &Map.put(&1, :started, true))
+    add_players(game, players)
     add_players_to_scores(game, players)
   end
 
+  @spec add_players(game :: pid, players :: list(String.t)) :: :ok
+  defp add_players(game, players) do
+    join_keys = Enum.reduce(players, %{}, fn(player, keys) ->
+      Map.put(keys, player, join_key())
+    end)
+    Agent.update(game, &Map.put(&1, :players, join_keys))
+  end
+
+  @spec join_key() :: String.t
+  defp join_key, do: 8 |> :crypto.strong_rand_bytes |> Base.url_encode64 |> binary_part(0, 8)
+
+  @spec add_players_to_scores(game :: pid, players :: list(String.t)) :: :ok
   defp add_players_to_scores(game, players) do
     scores = Enum.reduce(players, %{}, fn(player, scores) ->
       Map.put(scores, player, 0)
