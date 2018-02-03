@@ -135,6 +135,16 @@ defmodule BullServer.Games do
   end
 
   @doc """
+  Gets the rejoin key for a user.
+  """
+  @spec key(game_id :: String.t, player_name :: String.t) :: String.t
+  def key(game_id, player_name) do
+    game_id
+    |> get()
+    |> Game.key(player_name)
+  end
+
+  @doc """
   List all games in memory.
   """
   @spec list() :: map

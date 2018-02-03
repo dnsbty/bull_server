@@ -61,6 +61,14 @@ defmodule BullServer.Games.Game do
   end
 
   @doc """
+  Gets the rejoin key for a player.
+  """
+  @spec key(game :: pid, player_name :: String.t) :: String.t
+  def key(game, player_name) do
+    Agent.get(game, &get_in(&1, [:players, player_name]))
+  end
+
+  @doc """
   Gets the next stage of the game.
   """
   @spec next_stage(game :: pid) :: atom

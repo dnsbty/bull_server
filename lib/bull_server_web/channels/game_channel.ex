@@ -5,6 +5,8 @@ defmodule BullWebServer.GameChannel do
   use BullServerWeb, :channel
   alias BullServer.Games
 
+  intercept ["start_game"]
+
   @doc """
   Handles users joining a game channel. Using `new` as the game ID will create a new game.
   """
@@ -94,6 +96,24 @@ defmodule BullWebServer.GameChannel do
     {:noreply, socket}
   end
 
+  @doc """
+  Handle messages being broadcast to users. The following messages are being intercepted:
+
+  "start_game"
+    - Description: Being sent down when the game is started.
+    - Interception Reason: We want to append a secret key that will allow the user to rejoin the
+        game if they leave at any point.
+  """
+  def handle_out("start_game", word, socket) do
+    game_id = game_id(socket)
+    player_name = player_name(socket)
+    key = Games.key(game_id, player_name)
+    payload = Map.put(word, :rejoin_key, key)
+
+    push socket, "start_game", payload
+    {:noreply, socket}
+  end
+
   defp broadcast_next_stage({:defining, word}, socket) do
     broadcast socket, "start_defining", word
   end
@@ -105,4 +125,6 @@ defmodule BullWebServer.GameChannel do
   end
 
   defp game_id(%{topic: "game:" <> game_id}), do: game_id
+
+  defp player_name(%{assigns: %{player_name: name}}), do: name
 end
